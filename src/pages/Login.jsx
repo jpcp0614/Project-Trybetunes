@@ -4,18 +4,26 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      login: '',
+      login: '', // login inicia vazio
       disabled: true,
     };
+    this.onChangeInput = this.onChangeInput.bind(this);
+  }
+
+  // Função para o Input
+  onChangeInput({ target }) {
+    this.setState({
+      login: target.value, // atualizo o valor digitado no input
+    }, this.verifyCharacterInput); // funcao de verificar os caracteres, para habilitar o botao
   }
 
   // Função para contar caracteres do nome no login
-  verifyCharacterInLogin() {
-    const NUMBER_MIN = 3;
+  verifyCharacterInput() {
+    const NUMBER_MIN_CHARACTERS = 3;
     const { login } = this.state;
-    const lengthName = login.length >= NUMBER_MIN;
+    const lengthName = login.length >= NUMBER_MIN_CHARACTERS;
     this.setState({
-      disabled: !lengthName,
+      disabled: !lengthName, // se for >= 3 caracteres, botao habilitado
     });
   }
 
@@ -26,11 +34,12 @@ class Login extends Component {
         <form>
           <input
             data-testid="login-name-input"
+            onChange={ this.onChangeInput }
             type="text"
           />
           <button
             data-testid="login-submit-button"
-            disabled={ disabled }
+            disabled={ disabled } // botao desabilitado
             type="button"
           >
             Entrar
