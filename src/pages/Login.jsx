@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
+import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
 
 class Login extends Component {
@@ -47,7 +48,7 @@ class Login extends Component {
     if (loading) {
       return (
         <div>
-          <h2>Carregando...</h2>
+          <Loading />
           { redirect && <Redirect to="/search" /> }
         </div>
       );
