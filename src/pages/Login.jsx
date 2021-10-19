@@ -47,7 +47,7 @@ class Login extends Component {
     if (loading) {
       return (
         <div>
-          <h1>Carregando...</h1>
+          <h2>Carregando...</h2>
           { redirect && <Redirect to="/search" /> }
         </div>
       );
@@ -65,7 +65,7 @@ class Login extends Component {
             data-testid="login-submit-button"
             disabled={ disabled } // botao desabilitado
             onClick={ () => this.submitLoginButton(login) }
-            type="button"
+            type="submit"
           >
             Entrar
           </button>
