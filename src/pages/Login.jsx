@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
+import { createUser } from '../services/userAPI';
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       login: '', // login inicia vazio
-      disabled: true,
+      disabled: true, // botao desabilitado inicialmente
+      loading: false,
+      redirect: false,
     };
     this.onChangeInput = this.onChangeInput.bind(this);
   }
@@ -27,19 +31,40 @@ class Login extends Component {
     });
   }
 
+  // Função para clicar no botão e salvar o que for digitado
+  async submitLoginButton(login) {
+    this.setState({
+      loading: true,
+    });
+    await createUser({ name: login });
+    this.setState({
+      redirect: true,
+    });
+  }
+
   render() {
-    const { disabled } = this.state;
+    const { disabled, loading, login, redirect } = this.state;
+    if (loading) {
+      return (
+        <div>
+          <h1>Carregando...</h1>
+          { redirect && <Redirect to="/search" /> }
+        </div>
+      );
+    }
+
     return (
       <div data-testid="page-login">
         <form>
           <input
             data-testid="login-name-input"
-            onChange={ this.onChangeInput }
+            onChange={ this.onChangeInput } // pegar o que será digitado
             type="text"
           />
           <button
             data-testid="login-submit-button"
             disabled={ disabled } // botao desabilitado
+            onClick={ () => this.submitLoginButton(login) }
             type="button"
           >
             Entrar
