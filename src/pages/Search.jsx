@@ -4,6 +4,9 @@ import Header from '../components/Header';
 import searchAlbumAPI from '../services/searchAlbumsAPI';
 import Loading from '../components/Loading';
 
+// Para fazer o requisito 6, tive ajuda dos amigos na salinha de estudos no Zoom,
+// que agradeço muito: Fernando, Denis, Gabrielle, Arthur, Flavio e Laurenz. OBRIGADO!!!
+
 class Search extends Component {
   constructor() {
     super();
