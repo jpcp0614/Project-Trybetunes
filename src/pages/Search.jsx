@@ -15,6 +15,7 @@ class Search extends Component {
       arrayAlbum: [],
     };
     this.onChangeInputArtist = this.onChangeInputArtist.bind(this);
+    this.searchAlbumArtist = this.searchAlbumArtist.bind(this);
   }
 
   // Função para o Input do Pesquisar
@@ -54,7 +55,7 @@ class Search extends Component {
   albumSearchResult() {
     const { arrayAlbum, lastSearch } = this.state;
     if (arrayAlbum.length === 0) {
-      return <p>Nenhum álbum encontrado</p>; // caso não encontre o album pesquisado
+      return <p>Nenhum álbum foi encontrado</p>; // caso não encontre o album pesquisado
     }
     return (
       <section>
@@ -64,7 +65,7 @@ class Search extends Component {
           <Link
             key={ album.collectionId }
             data-testid={ `link-to-album-${album.collectionId}` }
-            to={ `link-to-album-${album.collectionId}` }
+            to={ `/album/${album.collectionId}` }
           >
             <ul>{album.collectionName}</ul>
             {/* lista de nomes de albuns */}
@@ -91,6 +92,7 @@ class Search extends Component {
             <button
               data-testid="search-artist-button"
               disabled={ disabledButtonSource }
+              onClick={ this.searchAlbumArtist }
               type="submit"
             >
               Pesquisar
