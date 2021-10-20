@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import searchAlbumAPI from '../services/searchAlbumsAPI';
 import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 class Search extends Component {
   constructor() {
@@ -65,7 +66,8 @@ class Search extends Component {
             data-testid={ `link-to-album-${album.collectionId}` }
             to={ `link-to-album-${album.collectionId}` }
           >
-            fg
+            <ul>{album.collectionName}</ul>
+            {/* lista de nomes de albuns */}
           </Link>
         ))}
       </section>
@@ -73,25 +75,28 @@ class Search extends Component {
   }
 
   render() {
-    const { disabledButtonSource } = this.state;
+    const { disabledButtonSource, loading, search } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
-        <form>
-          <input
-            data-testid="search-artist-input"
-            onChange={ this.onChangeInputArtist }
-            type="text"
-          />
+        { loading ? (<Loading />) : (
+          <form>
+            <input
+              data-testid="search-artist-input"
+              onChange={ this.onChangeInputArtist }
+              type="text"
+            />
 
-          <button
-            data-testid="search-artist-button"
-            disabled={ disabledButtonSource }
-            type="submit"
-          >
-            Pesquisar
-          </button>
-        </form>
+            <button
+              data-testid="search-artist-button"
+              disabled={ disabledButtonSource }
+              type="submit"
+            >
+              Pesquisar
+            </button>
+          </form>
+        )}
+        { this.albumSearchResult() }
       </div>
     );
   }
