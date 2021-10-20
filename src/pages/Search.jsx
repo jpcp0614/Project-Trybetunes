@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import searchAlbumAPI from '../services/searchAlbumsAPI';
-import { Link } from 'react-router-dom';
 import Loading from '../components/Loading';
 
 class Search extends Component {
@@ -85,6 +85,7 @@ class Search extends Component {
               data-testid="search-artist-input"
               onChange={ this.onChangeInputArtist }
               type="text"
+              value={ search }
             />
 
             <button
