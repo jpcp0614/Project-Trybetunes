@@ -12,8 +12,8 @@ class Search extends Component {
     super();
     this.state = {
       search: '', // valor inicial do compo input de pesquisa -> para o requisito 6, mudei de artist para search
-      disabledButtonSource: true, // desabilitado - linha 44
-      loading: false,
+      isDisabledButtonSource: true, // desabilitado - linha 44...refatorando
+      isLoading: false, // refatorando
       lastSearch: '',
       arrayAlbum: [],
     };
@@ -34,7 +34,7 @@ class Search extends Component {
     const { search } = this.state;
     const lengthNameArtist = search.length >= NUMBER_MIN_CHARACTERS;
     this.setState({
-      disabledButtonSource: !lengthNameArtist, // se for >= 2, habilita o botão
+      isDisabledButtonSource: !lengthNameArtist, // se for >= 2, habilita o botão
     });
   }
 
@@ -42,7 +42,7 @@ class Search extends Component {
   async searchAlbumArtist() {
     const { search } = this.state;
     this.setState({
-      loading: true,
+      isLoading: true,
       lastSearch: search,
     });
 
@@ -50,7 +50,7 @@ class Search extends Component {
     this.setState({
       arrayAlbum: [...response], // 'pego' todo os albuns
       search: '', // limpo o campo de pesquisa
-      loading: false, // paro com a msg Carregando...
+      isLoading: false, // paro com a msg Carregando...
     });
   }
 
@@ -79,11 +79,11 @@ class Search extends Component {
   }
 
   render() {
-    const { disabledButtonSource, loading, search } = this.state;
+    const { isDisabledButtonSource, isLoading, search } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
-        { loading ? (<Loading />) : (
+        { isLoading ? (<Loading />) : (
           <form>
             <input
               data-testid="search-artist-input"
@@ -94,7 +94,7 @@ class Search extends Component {
 
             <button
               data-testid="search-artist-button"
-              disabled={ disabledButtonSource }
+              disabled={ isDisabledButtonSource }
               onClick={ this.searchAlbumArtist }
               type="submit"
             >

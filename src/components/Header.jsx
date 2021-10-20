@@ -8,7 +8,7 @@ class Header extends Component {
     super();
     this.state = {
       personLogged: '', // nome da pessoa logada inicialmente
-      loading: true,
+      isLoading: true, // refatorando para melhor compreensão
     };
   }
 
@@ -22,16 +22,16 @@ class Header extends Component {
     const { name } = namePerson; // desestruturo o objeto namePerson
     this.setState({
       personLogged: name,
-      loading: false, // atualizo o nome da pessoa e o estado do loading
+      isLoading: false, // atualizo o nome da pessoa e o estado do isLoading
     });
   }
 
   render() {
-    const { personLogged, loading } = this.state;
+    const { personLogged, isLoading } = this.state;
     return (
       <header data-testid="header-component">
         <h2 data-testid="header-user-name">
-          { loading ? <Loading /> : personLogged }
+          { isLoading ? <Loading /> : personLogged }
         </h2>
         <nav>
           <Link to="/search" data-testid="link-to-search">Search</Link>

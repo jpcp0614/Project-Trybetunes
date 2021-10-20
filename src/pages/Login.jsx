@@ -8,9 +8,9 @@ class Login extends Component {
     super();
     this.state = {
       login: '', // login inicia vazio
-      disabled: true, // botao desabilitado inicialmente
-      loading: false,
-      redirect: false,
+      isDisabled: true, // botao desabilitado inicialmente...refatorando
+      isLoading: false, // refatorando
+      isRedirect: false, // refatorando
     };
     this.onChangeInput = this.onChangeInput.bind(this);
   }
@@ -28,28 +28,28 @@ class Login extends Component {
     const { login } = this.state;
     const lengthName = login.length >= NUMBER_MIN_CHARACTERS;
     this.setState({
-      disabled: !lengthName, // se for >= 3 caracteres, botao habilitado
+      isDisabled: !lengthName, // se for >= 3 caracteres, botao habilitado
     });
   }
 
   // Função para clicar no botão e salvar o que for digitado
   async submitLoginButton(login) {
     this.setState({
-      loading: true,
+      isLoading: true,
     });
     await createUser({ name: login });
     this.setState({
-      redirect: true,
+      isRedirect: true,
     });
   }
 
   render() {
-    const { disabled, loading, login, redirect } = this.state;
-    if (loading) {
+    const { isDisabled, isLoading, login, isRedirect } = this.state;
+    if (isLoading) {
       return (
         <div>
           <Loading />
-          { redirect && <Redirect to="/search" /> }
+          { isRedirect && <Redirect to="/search" /> }
         </div>
       );
     }
@@ -64,7 +64,7 @@ class Login extends Component {
           />
           <button
             data-testid="login-submit-button"
-            disabled={ disabled } // botao desabilitado
+            disabled={ isDisabled } // botao desabilitado
             onClick={ () => this.submitLoginButton(login) }
             type="submit"
           >
