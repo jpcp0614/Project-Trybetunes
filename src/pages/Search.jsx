@@ -70,8 +70,12 @@ class Search extends Component {
             data-testid={ `link-to-album-${album.collectionId}` }
             to={ `/album/${album.collectionId}` }
           >
-            <ul>{album.collectionName}</ul>
-            {/* lista de nomes de albuns */}
+            {' '}
+            <div>
+              <p>{album.collectionName}</p>
+              {/* lista de nomes de albuns */}
+              <img src={ album.artworkUrl100 } alt={ album.collectionName } />
+            </div>
           </Link>
         ))}
       </section>
