@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import searchAlbumAPI from '../services/searchAlbumsAPI';
+import { Link } from 'react-router-dom';
 
 class Search extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class Search extends Component {
       disabledButtonSource: true, // desabilitado - linha 44
       loading: false,
       lastSearch: '',
+      arrayAlbum: [],
     };
     this.onChangeInputArtist = this.onChangeInputArtist.bind(this);
   }
@@ -41,8 +43,33 @@ class Search extends Component {
 
     const response = await searchAlbumAPI(search); // esperar a API
     this.setState({
-      
+      arrayAlbum: [...response], // 'pego' todo os albuns
+      search: '', // limpo o campo de pesquisa
+      loading: false, // paro com a msg Carregando...
     });
+  }
+
+  // Função do resultado da pesquisa do album
+  albumSearchResult() {
+    const { arrayAlbum, lastSearch } = this.state;
+    if (arrayAlbum.length === 0) {
+      return <p>Nenhum álbum encontrado</p>; // caso não encontre o album pesquisado
+    }
+    return (
+      <section>
+        <p>{`Resultado de álbuns de: ${lastSearch}`}</p>
+        {/* encontrando o album, fazer um map para listar os albuns na tela */}
+        {arrayAlbum.map((album) => (
+          <Link
+            key={ album.collectionId }
+            data-testid={ `link-to-album-${album.collectionId}` }
+            to={ `link-to-album-${album.collectionId}` }
+          >
+            fg
+          </Link>
+        ))}
+      </section>
+    );
   }
 
   render() {
