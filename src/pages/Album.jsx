@@ -4,6 +4,7 @@ import getMusics from '../services/musicsAPI';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import Loading from '../components/Loading';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 // Para resolver o requisito 7, tive a ajuda dos meus amigos Denis, Arthur, Leonardo, Flavio e Fernando
 
@@ -12,14 +13,35 @@ class Album extends Component {
     super();
     this.state = {
       musicsList: [], // inicia com array vazio
+      musicsFavorites: [],
       isLoading: false,
     };
     this.getMusics = this.getMusics.bind(this);
     this.renderInfo = this.renderInfo.bind(this);
+    this.checkedFavorite = this.checkedFavorite.bind(this);
   }
 
   componentDidMount() {
     this.getMusics();
+    this.onMusicFavorite();
+  }
+
+  componentDidUpdate(_prevProps, prevState) {
+    const { musicsFavorites } = this.state;
+    if (prevState.musicsFavorites !== musicsFavorites) { // estado anterior diferente do array de favoritas, para atualizar o state
+      this.checkedFavorite();
+    }
+  }
+
+  async onMusicFavorite() {
+    this.setState({
+      isLoading: true,
+    });
+    const getFavorite = await getFavoriteSongs();
+    this.setState({
+      isLoading: false,
+      musicsFavorites: getFavorite,
+    });
   }
 
   // Função para requisitar a API
@@ -30,6 +52,17 @@ class Album extends Component {
     this.setState({
       isLoading: false,
       musicsList: [...response],
+    });
+  }
+
+  // Função para o check de Favorita
+  checkedFavorite() {
+    const { musicsFavorites } = this.state;
+    musicsFavorites.forEach(({ trackId }) => {
+      const getID = document.getElementById(`${trackId}`); // selecionar o id
+      if (getID) {
+        getID.checked = 'true';
+      }
     });
   }
 
