@@ -72,8 +72,10 @@ class Search extends Component {
           >
             {' '}
             <div>
-              <p>{album.collectionName}</p>
-              {/* lista de nomes de albuns */}
+              <section>
+                <img src={ album.artworkUrl100 } alt={ album.collectionName } />
+                <h3>{album.collectionName}</h3>
+              </section>
               <img src={ album.artworkUrl100 } alt={ album.collectionName } />
             </div>
           </Link>
