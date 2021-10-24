@@ -38,13 +38,12 @@ class Album extends Component {
       <div data-testid="page-album">
         <Header />
         <section>
-          {/* renderizar na tela */}
           <img src={ albumImage } alt={ collectionName } />
           <h4 data-testid="artist-name">{ artistName }</h4>
           <span data-testid="album-name">{ collectionName }</span>
         </section>
         {musicsList
-          .slice(1) // fazer o array do map a partir do indice 1
+          .slice(1)
           .map((music, index) => <MusicCard key={ index } music={ music } />)}
       </div>
     );
